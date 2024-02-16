@@ -4,13 +4,21 @@ public class Dice
 {
     //サイコロの出目に出力する値   
     private const int DicePipValue1 = 1;
+    //サイコロの出目に出力する値 
     private const int DicePipValue2 = 2;
+    //サイコロの出目に出力する値 
     private const int DicePipValue3 = 3;
+    //サイコロの出目に出力する値 
     private const int DicePipValue4 = 4;
+    //サイコロの出目に出力する値 
     private const int DicePipValue5 = 5;
+    //サイコロの出目に出力する値 
     private const int DicePipValue6 = 6;
 
+    //乱数を入れるための配列
     private int[] numbers;
+    
+    //ランダマイザ
     private Random random;
 
     // コンストラクタ
