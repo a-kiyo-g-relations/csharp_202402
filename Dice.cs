@@ -3,20 +3,25 @@
 public class Dice
 {
     // サイコロの出目に出力する値   
-    private const int DicePip1 = 1;
-    private const int DicePip2 = 2;
-    private const int DicePip3 = 3;
-    private const int DicePip4 = 4;
-    private const int DicePip5 = 5;
-    private const int DicePip6 = 6;
-
+    public enum PipDice
+    {
+        DicePipOne = 1,
+        DicePipTwo = 2,
+        DicePipThree = 3,
+        DicePipFour = 4,
+        DicePipFive = 5,
+        DicePipSix = 6
+    }
+    
+    // 直前の出目を保持する変数
+    private PipDice rollNumber;
+    // 前回の出目を保持する変数
+    private int rollValue;
+    
     // サイコロの出目の定数を入れるための配列
-    private int[] pipDice = new int[] { 
-        DicePip1, DicePip2, DicePip3, 
-        DicePip4, DicePip5, DicePip6 };
-
-    //サイコロの乱数を保持するための配列
-    private int[] diceNumbers = new int[3];
+    private PipDice[] pipDice = new PipDice[] {
+        PipDice.DicePipOne, PipDice.DicePipTwo, PipDice.DicePipThree,
+        PipDice.DicePipFour, PipDice.DicePipFive, PipDice.DicePipSix };
 
     // ランダマイザ
     private Random random;
@@ -27,21 +32,25 @@ public class Dice
         random = new Random();
     }
 
-    // 乱数を生成する
-    public int GetRandomDiceNumber()
+    // サイコロを振り、ランダムな値を返し、RollNumberに保持
+    public int Roll()
+    {
+        rollNumber = GetRandomNumber();
+        int rollValue = (int)rollNumber; // 列挙型を整数にキャスト
+        return rollValue;
+    }
+
+    // 前回の出目を取得する
+    public int GetRollValue()
+    {
+            return rollValue;   
+    }
+
+    // 乱数を生成して返す
+    public PipDice GetRandomNumber()
     {
         int randomIndex = random.Next(pipDice.Length);
         return pipDice[randomIndex];
     }
-
-    // 乱数を指定の数ループし格納
-    public int[] GenerateRandomNumbers()
-    {
-        int count = 3; // 生成する乱数の数
-        for (int i = 0; i < count; i++)
-        {
-            diceNumbers[i] = GetRandomDiceNumber();
-        }
-        return diceNumbers;
-    }
 }
+
