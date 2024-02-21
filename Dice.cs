@@ -14,7 +14,7 @@ public class Dice
     }
 
     // 直前の出目を保持する変数
-    private int rollValue;
+    private int value;
 
     // ランダマイザ
     private Random random;
@@ -26,24 +26,23 @@ public class Dice
     }
 
     // 前回の出目を取得する
-    public int GetRollValue()
+    public int GetValue()
     {
-        Roll();
-        return rollValue;
+        return value;
     }
 
-    // サイコロを振り、ランダム値をrollValueに保持
-    public void Roll()
+    // サイコロを振り、更新されたランダム値を保持
+    public void RollDice()
     {
-        Pip rollNumber = GetRandomNumber(); // ランダム値を保持
-        rollValue = (int)rollNumber; // 列挙型を整数にキャストして代入
+        int rollNumber = GetRandomNumber();
+        value = rollNumber;
     }
 
-    // 乱数を生成して返す
-    private Pip GetRandomNumber()
+    // サイコロの出目をランダムに取得する
+    private int GetRandomNumber()
     {
-        Array diceValues = Enum.GetValues(typeof(Pip)); // 列挙型の値を取得
+        Array diceValues = Enum.GetValues(typeof(Pip));
         int randomIndex = random.Next(diceValues.Length);
-        return (Pip)diceValues.GetValue(randomIndex); // 乱数を Pip 列挙型に変換して返す
+        return randomIndex;
     }
 }
