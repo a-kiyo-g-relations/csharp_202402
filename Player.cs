@@ -10,7 +10,7 @@ public class Player
         Two = 2
     }
 
-    //サイコロの乱数を保持するための配列
+    // サイコロの乱数を保持するための配列
     private int[] diceValue = new int[3];
 
     Dice dice = new Dice();
@@ -37,15 +37,15 @@ public class Player
     {
         if (numbers.Distinct().Count() == (int)RoleDecision.One)
         {
-            return 2; // 全ての値が一致する場合
+            return 2;
         }
         else if (numbers.Distinct().Count() == (int)RoleDecision.Two)
         {
-            return 1; // 二つの値が一致する場合
+            return 1;
         }
         else
         {
-            return 0; // 全ての値が一致しない場合
+            return 0;
         }
     }
 }
