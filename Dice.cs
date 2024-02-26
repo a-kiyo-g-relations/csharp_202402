@@ -6,11 +6,11 @@ public class Dice
     public enum Pip
     {
         One = 1,
-        Two = 2,
-        Three = 3,
-        Four = 4,
-        Five = 5,
-        Six = 6
+        Two,
+        Three,
+        Four,
+        Five,
+        Six
     }
 
     // 直前の出目を保持する変数
@@ -41,8 +41,9 @@ public class Dice
     // サイコロの出目をランダムに取得する
     private int GetRandomNumber()
     {
-        Array diceValues = Enum.GetValues(typeof(Pip));
+        int[] diceValues = Enum.GetValues(typeof(Pip)).Cast<int>().ToArray();
         int randomIndex = random.Next(diceValues.Length);
-        return randomIndex;
+        return diceValues[randomIndex];
     }
 }
+
