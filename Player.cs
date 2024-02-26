@@ -4,12 +4,13 @@ using System.Linq;
 
 public class Player
 {
+    // 役を決めるための出目の種類の値
     private const int RoleZorome = 1;
     private const int RoleYakuAri = 2;
 
     private Dice[] dices = new Dice[] { new Dice(), new Dice(), new Dice() };
 
-    // サイコロを振り、取得した出目の値を配列に保持
+    // 三つのサイコロを振る
     public void RollDices()
     {
         foreach (Dice dice in dices)
@@ -18,28 +19,28 @@ public class Player
         }
     }
 
-    // 取得したサイコロ三つの値のint型配列を作成する
-    public int[] GetDices()
+    // 三つのサイコロをint型配列に格納する
+    public int[] DicesToInt()
     {
         int[] diceValues = dices.Select(dice => dice.GetValue()).ToArray();
         return diceValues;
     }
 
-    // 重複した値を除去し、残った数値を取得する
-    public int GetDiceValue(int[] values)
+    // 取得した値と出目の種類と比較、重複しない値を取得する
+    public int IsDiceValue(int[] values)
     {
         if (values.Distinct().Count() == values.Length)
         {
             return 0;
         }
+        else if (values.Distinct().Count() == RoleZorome)
+        {
+            return values.First();
+        }
         foreach (int val in values)
         {
             int count = values.Count(x => x == val);
-            if (count == RoleZorome)
-            {
-                return val;
-            }
-            else if (count == RoleYakuAri)
+            if (count == RoleYakuAri)
             {
                 int uniqueValue = values.First(x => x != val);
                 return uniqueValue;
@@ -48,8 +49,8 @@ public class Player
         return 0;
     }
 
-    // 出目の種類の数によって役を取得する
-    public Constants.ToDecideMeans GetHand(int[] number)
+    // 取得した出目と出目の種類を比較し役を取得する
+    public Constants.ToDecideMeans IsHand(int[] number)
     {
         int compValue = number.Distinct().Count();
 

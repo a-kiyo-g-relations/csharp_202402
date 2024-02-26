@@ -2,7 +2,7 @@
 
 public class Constants
 {
-    // 出目の種類によって役を判断するための値 
+    // 役を定義する値 
     public enum ToDecideMeans
     {
         YakuNashi, // 出目が0種類 =「役：役なし」
