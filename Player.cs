@@ -1,16 +1,26 @@
 ﻿using System;
 using System.Linq;
 
-
 public class Player
 {
     // 役を決めるための出目の種類の値
     private const int RoleZorome = 1;
     private const int RoleYakuAri = 2;
 
-    private Dice[] dices = new Dice[] { new Dice(), new Dice(), new Dice() };
+    // サイコロの数
+    private const int DiceNumber = 3;
 
-    // 三つのサイコロを振る
+    private Dice[] dices = new Dice[DiceNumber];
+
+    public Player()
+    {
+        for(int i = 0; i < dices.Length; i++)
+        {
+            dices[i] = new Dice();
+        }
+    }
+
+    // サイコロを振る
     public void RollDices()
     {
         foreach (Dice dice in dices)
@@ -19,54 +29,59 @@ public class Player
         }
     }
 
-    // 三つのサイコロをint型配列に格納する
-    public int[] DicesToInt()
+    // サイコロの出目を取得する
+    public int[] DiceValues()
     {
-        int[] diceValues = dices.Select(dice => dice.GetValue()).ToArray();
-        return diceValues;
+        return dices.Select(dice => dice.GetValue()).ToArray();
     }
 
-    // 取得した値と出目の種類と比較、重複しない値を取得する
-    public int IsDiceValue(int[] values)
+    // 役の強さを取得する
+    public int GetHandValue()
     {
-        if (values.Distinct().Count() == values.Length)
+        int[] values = DiceValues();
+        if (GetHandRoll() == Constants.HandRole.YakuNashi)
         {
+            // 役なしの場合、0を返す
             return 0;
         }
-        else if (values.Distinct().Count() == RoleZorome)
+        else if (GetHandRoll() == Constants.HandRole.Zorome)
         {
+            // ゾロ目の場合、配列の先頭の数字を返す
             return values.First();
         }
-        foreach (int val in values)
+        else if (GetHandRoll() == Constants.HandRole.YakuAri)
         {
-            int count = values.Count(x => x == val);
-            if (count == RoleYakuAri)
+            // 役ありの場合、一つしかない数字を返す
+            foreach (int val in values)
             {
-                int uniqueValue = values.First(x => x != val);
-                return uniqueValue;
+                int count = values.Count(x => x == val);
+                if (count > 1)
+                {
+                    return values.First(x => x != val);
+                }
             }
         }
         return 0;
     }
 
     // 取得した出目と出目の種類を比較し役を取得する
-    public Constants.ToDecideMeans IsHand(int[] number)
+    public Constants.HandRole GetHandRoll()
     {
-        int compValue = number.Distinct().Count();
-
+        int compValue = DiceValues().Distinct().Count();
         if (compValue == RoleZorome)
         {
-            return Constants.ToDecideMeans.Zorome; // 出目が1種類 =「役：ゾロ目」
+            // 出目が1種類 =「役：ゾロ目」
+            return Constants.HandRole.Zorome;
         }
         else if (compValue == RoleYakuAri)
         {
-            return Constants.ToDecideMeans.YakuAri; // 出目が2種類 =「役：役あり」
+            // 出目が2種類 =「役：役あり」
+            return Constants.HandRole.YakuAri;
         }
         else
         {
-            return Constants.ToDecideMeans.YakuNashi; // 出目が3種類 =「役：役なし」
+            // 出目が3種類 =「役：役なし」
+            return Constants.HandRole.YakuNashi;
         }
     }
 }
-
-
