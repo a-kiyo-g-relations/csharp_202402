@@ -41,8 +41,9 @@ public class Dice
     // サイコロの出目をランダムに取得する
     private int GetRandomNumber()
     {
-        Array diceValues = Enum.GetValues(typeof(Pip));
-        int randomIndex = random.Next(1, diceValues.Length + 1);
-        return randomIndex;
+        int[] diceValues = Enum.GetValues(typeof(Pip)).Cast<int>().ToArray();
+        int randomIndex = random.Next(diceValues.Length);
+        return diceValues[randomIndex];
     }
 }
+

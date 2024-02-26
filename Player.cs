@@ -1,89 +1,70 @@
 ﻿using System;
 using System.Linq;
 
+
 public class Player
 {
-    // サイコロの乱数を保持するための配列
-    private int[] diceValues = new int[3];
+    private const int RoleZorome = 1;
+    private const int RoleYakuAri = 2;
 
-    // サイコロを振った結果の出目数値
-    private int value;
-
-
-
-    Dice diceOne = new Dice();
-    Dice diceTwo = new Dice();
-    Dice diceThree = new Dice();
-    Constants constants = new Constants();
+    private Dice[] dices = new Dice[] { new Dice(), new Dice(), new Dice() };
 
     // サイコロを振り、取得した出目の値を配列に保持
-    public void RollDiceHoldingValue()
+    public void RollDices()
     {
-        int i = 0;
-        foreach (Dice dice in new Dice[] { diceOne, diceTwo, diceThree })
+        foreach (Dice dice in dices)
         {
             dice.RollDice();
-            diceValues[i++] = dice.GetValue();
         }
     }
 
-    // 重複した値を除去し、残った数値を取得する
-    public void GetValueDice()
+    // 取得したサイコロ三つの値のint型配列を作成する
+    public int[] GetDices()
     {
-        List<int> array = new List<int>();
-        List<int> diceValuesList = new List<int>(diceValues);
-        diceValuesList.Sort();
-        IEnumerable<int> duplicates = diceValuesList.GroupBy(x => x)
-                        .Where(group => group.Count() > 1)
-                        .Select(group => group.Key);
-        if (duplicates.Any())
-        {
-            array = diceValuesList.Except(duplicates).ToList();
-            value = array[0];
-        }
-        else
-        {
-            value = 0;
-        }
-    }
-
-    // 出目の種類の数によって役を判定する
-    public int ComparisonPipTypeCount()
-    {
-        int compValue = diceValues.Distinct().Count();
-
-        if (compValue == EnumToInt(Constants.JudgeValue.Zorome))
-        {
-            int Zorome = EnumToInt(Constants.JudgeValue.Zorome);
-            return Zorome; // 出目が1種類 =「役：ゾロ目」
-        }
-        else if (compValue == EnumToInt(Constants.JudgeValue.YakuAri))
-        {
-            int YakuAri = EnumToInt(Constants.JudgeValue.YakuAri);
-            return YakuAri; // 出目が2種類 =「役：役あり」
-        }
-        else
-        {
-            int YakuNashi = EnumToInt(Constants.JudgeValue.YakuNashi);
-            return YakuNashi; // 出目が3種類 =「役：役なし」
-        }
-    }
-
-    // 前回の出目を取得する
-    public int[] GetValue()
-    {
+        int[] diceValues = dices.Select(dice => dice.GetValue()).ToArray();
         return diceValues;
     }
 
-    // サイコロを振った結果の出目数値を取得する
-    public int GetDiceValue()
+    // 重複した値を除去し、残った数値を取得する
+    public int GetDiceValue(int[] values)
     {
-        return value;
+        if (values.Distinct().Count() == values.Length)
+        {
+            return 0;
+        }
+        foreach (int val in values)
+        {
+            int count = values.Count(x => x == val);
+            if (count == RoleZorome)
+            {
+                return val;
+            }
+            else if (count == RoleYakuAri)
+            {
+                int uniqueValue = values.First(x => x != val);
+                return uniqueValue;
+            }
+        }
+        return 0;
     }
 
-    // enum型をobject型を経由してint型に変換する
-    private int EnumToInt<I>(I value) where I : Enum
+    // 出目の種類の数によって役を取得する
+    public Constants.ToDecideMeans GetHand(int[] number)
     {
-        return (int)(object)value;
+        int compValue = number.Distinct().Count();
+
+        if (compValue == RoleZorome)
+        {
+            return Constants.ToDecideMeans.Zorome; // 出目が1種類 =「役：ゾロ目」
+        }
+        else if (compValue == RoleYakuAri)
+        {
+            return Constants.ToDecideMeans.YakuAri; // 出目が2種類 =「役：役あり」
+        }
+        else
+        {
+            return Constants.ToDecideMeans.YakuNashi; // 出目が3種類 =「役：役なし」
+        }
     }
 }
+
