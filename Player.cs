@@ -12,9 +12,13 @@ public class Player
 
     private Dice[] dices = new Dice[DiceNumber];
 
-    public Player()
+
+    public bool IsPlayer { get; set; }
+
+    public Player(bool isPlayer)
     {
-        for(int i = 0; i < dices.Length; i++)
+        IsPlayer = isPlayer;
+        for (int i = 0; i < dices.Length; i++)
         {
             dices[i] = new Dice();
         }
