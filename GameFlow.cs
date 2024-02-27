@@ -2,113 +2,99 @@
 
 public class GameFlow
 {
-    // 3
-    private const int MilliSeconds = 3000;
+    // cpuがサイコロを振るまでの待ち時間に必要な値
+    private const int ThreeMinuteValue = 3000;
 
-    Player player;
-    Player cpu;
-    Io outPut;
+    private Player player;
+    private Player cpu;
 
     public GameFlow()
     {
-        player = new Player(true);
-        cpu = new Player(false);
-        outPut = new Io();
+        player = new Player();
+        cpu = new Player();
     }
 
     public void Flow()
     {
         // タイトルとゲーム開始を表示する
-        outPut.GameTitle();
+        OutputWords.GameTitle();
 
-        // プレイヤーがサイコロを振るか判断し出力する
-        outPut.IsPlayerDiceShake(player);
+        // プレイヤーの順番であることを表示する
+        OutputWords.PlayerDiceShake(player);
 
         // サイコロを振る
         player.RollDices();
 
         // サイコロの出目を表示する
-        outPut.ShowPipDice(player.DiceValues());
+        OutputWords.ShowPipDice(player.DiceValues());
 
-        // プレイヤーの役の強さを取得する
-        int playerHand = player.GetHandValue();
+        // プレイヤーの役を出力する
+        OutputWords.ChangePlayerHand(player, cpu, true);
 
-        // プレイヤーの役を取得する
-        Constants.HandRole playerHandRole = player.GetHandRoll();
+        // Enterキー押下で次へ
+        OutputWords.PushKeyEnter();
 
-        // プレイヤー判断し役を出力する
-        outPut.IsPlayerHand(player, playerHandRole, playerHand);
+        // cpuの順番であることを表示する
+        OutputWords.CpuDiceShake(cpu);
 
-        // Enterキーで次へ
-        outPut.KeyEnter();
-
-        // cpuがサイコロを振るか判断し、出力する
-        outPut.IsPlayerDiceShake(cpu);
-
-        // 三秒間の処理待ち
-        WaitThreeSeconds();
+        // cpuがサイコロを振るまでの待ち時間
+        CpuWaitingTime();
 
         // サイコロを振る
         cpu.RollDices();
 
         // サイコロの出目を表示する
-        outPut.ShowPipDice(cpu.DiceValues());
+        OutputWords.ShowPipDice(cpu.DiceValues());
 
-        // cpuの役の強さを取得する
-        int cpuHand = cpu.GetHandValue();
-
-        // cpuの役を取得する
-        Constants.HandRole cpuHandRole = cpu.GetHandRoll();
-
-        // cpuか判断し役を出力する
-        outPut.IsPlayerHand(cpu, cpuHandRole, cpuHand);
+        // cpuの役を出力する
+        OutputWords.ChangePlayerHand(player, cpu, false);
 
         // 役と数字で勝敗を判定する
-        DetermineWinOrLose(playerHandRole, playerHand, cpuHandRole, cpuHand);
+        DetermineWinOrLose();
 
-        outPut.KeyEnter();
+        // enterキー押下で終了
+        OutputWords.PushKeyEnter();
     }
 
     // 役と数字で勝敗を判定する    
-    public void DetermineWinOrLose(Constants.HandRole playerRole, int playerHand,
-                                        Constants.HandRole cpuRole, int cpuHand)
+    public void DetermineWinOrLose()
     {
-        if (playerRole == cpuRole)
+        if (player.GetHandRoll() == cpu.GetHandRoll())
         {
-            if (playerHand != cpuHand)
+            if (player.GetHandValue() != cpu.GetHandValue())
             {
-                if (playerHand > cpuHand)
+                if (player.GetHandValue() > cpu.GetHandValue())
                 {
-                    // 数値が相手より大きい場合
-                    Console.WriteLine("あなたの勝ちです");
+                    // 数値が相手より大きい場合「勝ち」
+                    OutputWords.ResultWin();
                 }
                 else
                 {
-                    // 数値が相手より小さい場合
-                    Console.WriteLine("あなたの負けです");
+                    // 数値が相手より小さい場合「負け」
+                    OutputWords.ResultLose();
                 }
             }
             else
             {
-                // 数値が一致する場合
-                Console.WriteLine("引き分けです");
+                // 数値が一致する場合「引き分け」
+                OutputWords.ResultDraw();
             }
         }
-        else if (playerRole > cpuRole)
+        else if (player.GetHandRoll() > cpu.GetHandRoll())
         {
-            // 役が相手より強い場合
-            Console.WriteLine("あなたの勝ちです");
+            // 役が相手より強い場合「勝ち」
+            OutputWords.ResultWin();
         }
         else
         {
-            // 役が相手より弱い場合
-            Console.WriteLine("あなたの負けです");
+            // 役が相手より弱い場合「負け」
+            OutputWords.ResultLose();
         }
     }
 
-    // 三秒間待つ
-    public void WaitThreeSeconds()
+    // cpuがサイコロを振るまでの待ち時間
+    public void CpuWaitingTime()
     {
-        System.Threading.Thread.Sleep(MilliSeconds);
+        System.Threading.Thread.Sleep(ThreeMinuteValue);
     }
 }
