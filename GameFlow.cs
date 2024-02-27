@@ -17,25 +17,25 @@ public class GameFlow
     public void Flow()
     {
         // タイトルとゲーム開始を表示する
-        OutputWords.GameTitle();
+        OutputWord.GameTitle();
 
         // プレイヤーの順番であることを表示する
-        OutputWords.PlayerDiceShake(player);
+        OutputWord.PlayerDiceShake(player);
 
         // サイコロを振る
         player.RollDices();
 
         // サイコロの出目を表示する
-        OutputWords.ShowPipDice(player.DiceValues());
+        OutputWord.ShowPipDice(player.DiceValues());
 
         // プレイヤーの役を出力する
-        OutputWords.ChangePlayerHand(player, cpu, true);
+        OutputWord.ChangePlayerHand(player, cpu, true);
 
         // Enterキー押下で次へ
-        OutputWords.PushKeyEnter();
+        OutputWord.PushKeyEnter();
 
         // cpuの順番であることを表示する
-        OutputWords.CpuDiceShake(cpu);
+        OutputWord.CpuDiceShake(cpu);
 
         // cpuがサイコロを振るまでの待ち時間
         CpuWaitingTime();
@@ -44,16 +44,16 @@ public class GameFlow
         cpu.RollDices();
 
         // サイコロの出目を表示する
-        OutputWords.ShowPipDice(cpu.DiceValues());
+        OutputWord.ShowPipDice(cpu.DiceValues());
 
         // cpuの役を出力する
-        OutputWords.ChangePlayerHand(player, cpu, false);
+        OutputWord.ChangePlayerHand(player, cpu, false);
 
         // 役と数字で勝敗を判定する
         DetermineWinOrLose();
 
         // enterキー押下で終了
-        OutputWords.PushKeyEnter();
+        OutputWord.PushKeyEnter();
     }
 
     // 役と数字で勝敗を判定する    
@@ -66,29 +66,29 @@ public class GameFlow
                 if (player.GetHandValue() > cpu.GetHandValue())
                 {
                     // 数値が相手より大きい場合「勝ち」
-                    OutputWords.ResultWin();
+                    OutputWord.ResultWin();
                 }
                 else
                 {
                     // 数値が相手より小さい場合「負け」
-                    OutputWords.ResultLose();
+                    OutputWord.ResultLose();
                 }
             }
             else
             {
                 // 数値が一致する場合「引き分け」
-                OutputWords.ResultDraw();
+                OutputWord.ResultDraw();
             }
         }
         else if (player.GetHandRoll() > cpu.GetHandRoll())
         {
             // 役が相手より強い場合「勝ち」
-            OutputWords.ResultWin();
+            OutputWord.ResultWin();
         }
         else
         {
             // 役が相手より弱い場合「負け」
-            OutputWords.ResultLose();
+            OutputWord.ResultLose();
         }
     }
 
