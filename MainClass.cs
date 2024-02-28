@@ -2,6 +2,7 @@
 {
     static void Main()
     {
-        Console.WriteLine("Boot Success.");
+        GameFlow gameFlow = new GameFlow();
+        gameFlow.StartGame();
     }
 }

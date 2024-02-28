@@ -14,7 +14,7 @@ public class Player
 
     public Player()
     {
-        for(int i = 0; i < dices.Length; i++)
+        for (int i = 0; i < dices.Length; i++)
         {
             dices[i] = new Dice();
         }

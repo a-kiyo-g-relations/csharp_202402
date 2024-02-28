@@ -2,7 +2,7 @@
 
 public class Dice
 {
-    // サイコロの出目に出力する値   
+    // サイコロの出目に出力する値
     public enum Pip
     {
         One = 1,
@@ -46,4 +46,3 @@ public class Dice
         return diceValues[randomIndex];
     }
 }
-
