@@ -81,10 +81,17 @@ public class OutputWord
         }
     }
 
-    // Enterキーで終了する
-    public static void PushKeyEnter()
+    // Enterキーで次へ
+    public static void ShowNextKeyEnter()
     {
         Console.WriteLine("Enterキーで次へ");
+        Console.ReadKey();
+    }
+
+    // Enterキーで終了する
+    public static void ShowEndKeyEnter()
+    {
+        Console.WriteLine("Enterキーで終了");
         Console.ReadKey();
     }
 }

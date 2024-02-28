@@ -14,7 +14,7 @@ public class GameFlow
         cpu = new Player();
     }
 
-    public void Flow()
+    public void StartGame()
     {
         // タイトルとゲーム開始を表示する
         OutputWord.ShowGameTitle();
@@ -45,7 +45,7 @@ public class GameFlow
         OutputWord.ShowHand(player, true);
 
         // Enterキー押下で次へ
-        OutputWord.PushKeyEnter();
+        OutputWord.ShowNextKeyEnter();
     }
 
     // cpuのターン
@@ -77,40 +77,38 @@ public class GameFlow
         OutputWord.ShowResult(result);
 
         // enterキー押下で終了
-        OutputWord.PushKeyEnter();
+        OutputWord.ShowEndKeyEnter();
     }
 
-    // 役を比較し勝敗を決める    
+    // 役を比較し勝敗を決める
     private Constants.ResultRoll CompareHand()
     {
-        if (player.GetHandRoll() == cpu.GetHandRoll())
-        {
-            if (player.GetHandValue() > cpu.GetHandValue())
-            {
-                // 数値が相手より大きい場合「勝ち」
-                return Constants.ResultRoll.Win;
-            }
-            else if (player.GetHandValue() < cpu.GetHandValue())
-            {
-                // 数値が相手より小さい場合「負け」
-                return Constants.ResultRoll.Lose;
-            }
-            else
-            {
-                // 数値が一致する場合「引き分け」
-                return Constants.ResultRoll.Draw;
-            }
-        }
-        else if (player.GetHandRoll() > cpu.GetHandRoll())
+        // 役の強さで比較する
+        if (player.GetHandRoll() > cpu.GetHandRoll())
         {
             // 役が相手より強い場合「勝ち」
             return Constants.ResultRoll.Win;
         }
-        else
+        if (player.GetHandRoll() < cpu.GetHandRoll())
         {
             // 役が相手より弱い場合「負け」
             return Constants.ResultRoll.Lose;
         }
+
+        // 役の強さが同じ場合は数値で比較する
+        if (player.GetHandValue() > cpu.GetHandValue())
+        {
+            // 数値が相手より大きい場合「勝ち」
+            return Constants.ResultRoll.Win;
+        }
+        if (player.GetHandValue() < cpu.GetHandValue())
+        {
+            // 数値が相手より小さい場合「負け」
+            return Constants.ResultRoll.Lose;
+        }
+
+        // 勝敗が決まらない場合「引き分け」
+        return Constants.ResultRoll.Draw;
     }
 
     // cpuがサイコロを振るまでの処理待ち
