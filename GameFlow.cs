@@ -38,7 +38,7 @@ public class GameFlow
         OutputWord.ShowCpuTurn();
 
         // cpuがサイコロを振るまでの処理待ち
-        WaitingCpu();
+        WaitCpu();
 
         // サイコロを振る
         cpu.RollDices();
@@ -50,14 +50,14 @@ public class GameFlow
         OutputWord.ReturnHandCompare(player, cpu, false);
 
         // 役と数字で勝敗を判定する
-        ReturnPlayerHandCompare();
+        CompareHand();
 
         // enterキー押下で終了
         OutputWord.PushKeyEnter();
     }
 
-    // 役を比較し勝敗を返す    
-    public void ReturnPlayerHandCompare()
+    // 役と数字で勝敗を判定する
+    public void CompareHand()
     {
         if (player.GetHandRoll() == cpu.GetHandRoll())
         {
@@ -93,7 +93,7 @@ public class GameFlow
     }
 
     // cpuがサイコロを振るまでの処理待ち
-    public void WaitingCpu()
+    public void WaitCpu()
     {
         System.Threading.Thread.Sleep(CpuWaitingTime);
     }
