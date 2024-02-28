@@ -4,7 +4,7 @@ using System;
 public class OutputWord
 {
     // タイトルとゲーム開始を表示する
-    public static void GameTitle()
+    public static void ShowGameTitle()
     {
         Console.WriteLine("チンチロリン");
         Console.WriteLine("Enterキーでゲーム開始");
@@ -12,21 +12,21 @@ public class OutputWord
     }
 
     // プレイヤーの順番であることを表示する
-    public static void PlayerDiceShake(Player player)
+    public static void ShowPlayerTurn()
     {
         Console.WriteLine("あなたの番です");
         Console.WriteLine("Enterキーでサイコロを投げる");
         Console.ReadKey();
     }
 
-    // cpuの番であることを表示する
-    public static void CpuDiceShake(Player cpu)
+    // cpuの順番であることを表示する
+    public static void ShowCpuTurn()
     {
         Console.WriteLine("相手の番です");
         Console.WriteLine("サイコロを投げます");
     }
 
-    // サイコロを振って出た出目の表示する
+    // サイコロの出目の表示する
     public static void ShowPipDice(int[] numbers)
     {
         foreach (int number in numbers)
@@ -36,8 +36,8 @@ public class OutputWord
         Console.WriteLine();
     }
 
-    // プレイヤー、役を判断しを手の結果を返す
-    public static void ChangePlayerHand(Player player, Player cpu, bool isPlayer)
+    // 役を判断して返す
+    public static void ReturnHandCompare(Player player, Player cpu, bool isPlayer)
     {
         string playerName = "あなた";
         string cpuName = "相手";
@@ -80,25 +80,25 @@ public class OutputWord
     }
 
     // 結果「勝ち」を返す
-    public static void ResultWin()
+    public static void ShowReturnWin()
     {
         Console.WriteLine("あなたの勝ちです");
     }
 
     // 結果「負け」を返す
-    public static void ResultLose()
+    public static void ShowReturnLose()
     {
         Console.WriteLine("あなたの負けです");
     }
 
     // 結果「引き分け」を返す
-    public static void ResultDraw()
+    public static void ShowReturnDraw()
     {
         Console.WriteLine("引き分けです");
     }
 
     // Enterキーで終了する
-    public static void KeyEnter()
+    public static void PushKeyEnter()
     {
         Console.WriteLine("Enterキーで次へ");
         Console.ReadKey();
