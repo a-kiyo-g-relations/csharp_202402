@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 public class OutputWord
 {
@@ -37,64 +36,82 @@ public class OutputWord
     }
 
     // 役を判断して返す
-    public static void ReturnHandCompare(Player player, Player cpu, bool isPlayer)
+    public static void ReturnHandCompare(Player player, bool isPlayer)
     {
-        string playerName = "あなた";
-        string cpuName = "相手";
+        string playerName;
         if (isPlayer)
         {
-            if (player.GetHandRoll() == Constants.HandRole.Zorome)
-            {
-                // プレイヤー、ゾロ目の場合"あなたの手はゾロ目です"を返す
-                Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]のゾロ目です");
-            }
-            else if (player.GetHandRoll() == Constants.HandRole.YakuAri)
-            {
-                // プレイヤー、役ありの場合"あなたの手は役ありです"を返す
-                Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]の役ありです");
-            }
-            else
-            {
-                // プレイヤー、役なしの場合"あなたの手は役なしです"を返す
-                Console.WriteLine($"{playerName}の手は役なしです");
-            }
+            playerName = "あなた";
         }
         else
         {
-            if (cpu.GetHandRoll() == Constants.HandRole.Zorome)
-            {
-                // cpu、ゾロ目の場合"相手の手はゾロ目です"を返す
-                Console.WriteLine($"{cpuName}の手は[{cpu.GetHandValue()}]のゾロ目です");
-            }
-            else if (cpu.GetHandRoll() == Constants.HandRole.YakuAri)
-            {
-                // cpu、役ありの場合"相手の手は役ありです"を返す
-                Console.WriteLine($"{cpuName}の手は[{cpu.GetHandValue()}]の役ありです");
-            }
-            else
-            {
-                // cpu、役なしの場合"相手の手は役なしです"を返す
-                Console.WriteLine($"{cpuName}の手は役なしです");
-            }
+            playerName = "相手";
+        }
+        if (player.GetHandRoll() == Constants.HandRole.Zorome)
+        {
+            // プレイヤー、ゾロ目の場合"ゾロ目です"を返す
+            Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]のゾロ目です");
+        }
+        else if (player.GetHandRoll() == Constants.HandRole.YakuAri)
+        {
+            // プレイヤー、役ありの場合"役ありです"を返す
+            Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]の役ありです");
+        }
+        else
+        {
+            // プレイヤー、役なしの場合"役なしです"を返す
+            Console.WriteLine($"{playerName}の手は役なしです");
         }
     }
 
-    // 結果「勝ち」を返す
-    public static void ShowReturnWin()
+    // 役を比較し勝敗を決める    
+    public static Constants.ResultRoll CompareHand(Player player, Player cpu)
     {
-        Console.WriteLine("あなたの勝ちです");
+        if (player.GetHandRoll() == cpu.GetHandRoll())
+        {
+            if (player.GetHandValue() > cpu.GetHandValue())
+            {
+                // 数値が相手より大きい場合「勝ち」
+                return Constants.ResultRoll.Win;
+            }
+            else if (player.GetHandValue() < cpu.GetHandValue())
+            {
+                // 数値が相手より小さい場合「負け」
+                return Constants.ResultRoll.Lose;
+            }
+            else
+            {
+                // 数値が一致する場合「引き分け」
+                return Constants.ResultRoll.Draw;
+            }
+        }
+        else if (player.GetHandRoll() > cpu.GetHandRoll())
+        {
+            // 役が相手より強い場合「勝ち」
+            return Constants.ResultRoll.Win;
+        }
+        else
+        {
+            // 役が相手より弱い場合「負け」
+            return Constants.ResultRoll.Lose;
+        }
     }
 
-    // 結果「負け」を返す
-    public static void ShowReturnLose()
+    // 勝敗結果を表示する
+    public static void ShowResult(Constants.ResultRoll result)
     {
-        Console.WriteLine("あなたの負けです");
-    }
-
-    // 結果「引き分け」を返す
-    public static void ShowReturnDraw()
-    {
-        Console.WriteLine("引き分けです");
+        if(result == Constants.ResultRoll.Win)
+        {
+            Console.WriteLine("あなたの勝ちです");
+        }
+        else if(result == Constants.ResultRoll.Lose)
+        {
+            Console.WriteLine("あなたの負けです");
+        }
+        else
+        {
+            Console.WriteLine("引き分けです");
+        }
     }
 
     // Enterキーで終了する

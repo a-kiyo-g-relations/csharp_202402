@@ -2,7 +2,7 @@
 
 public class GameFlow
 {
-    // cpuの待ち時間の値(ミリ)
+    // cpuの待ち時間の値(ミリ秒)
     private const int CpuWaitingTime = 3000;
 
     private Player player;
@@ -19,6 +19,19 @@ public class GameFlow
         // タイトルとゲーム開始を表示する
         OutputWord.ShowGameTitle();
 
+        // プレイヤーのターン処理
+        ExecutePlayerTurn();
+
+        // cpuのターン処理
+        ExecuteCpuTurn();
+
+        //ゲームの判定結果
+        ExecuteResult();
+    }
+
+    // プレイヤーのターン
+    private void ExecutePlayerTurn()
+    {
         // プレイヤーの順番であることを表示する
         OutputWord.ShowPlayerTurn();
 
@@ -29,11 +42,15 @@ public class GameFlow
         OutputWord.ShowPipDice(player.DiceValues());
 
         // 役を判断して表示する
-        OutputWord.ReturnHandCompare(player, cpu, true);
+        OutputWord.ReturnHandCompare(player, true);
 
         // Enterキー押下で次へ
         OutputWord.PushKeyEnter();
+    }
 
+    // cpuのターン
+    private void ExecuteCpuTurn()
+    {
         // cpuの順番であることを表示する
         OutputWord.ShowCpuTurn();
 
@@ -47,53 +64,24 @@ public class GameFlow
         OutputWord.ShowPipDice(cpu.DiceValues());
 
         // 役を判断して表示する
-        OutputWord.ReturnHandCompare(player, cpu, false);
+        OutputWord.ReturnHandCompare(cpu, false);
+    }
 
-        // 役と数字で勝敗を判定する
-        CompareHand();
+    // ゲームの判定結果
+    private void ExecuteResult()
+    {
+        // 役の強さの判定
+        Constants.ResultRoll result = OutputWord.CompareHand(player, cpu);
+
+        // 勝負の結果を表示する
+        OutputWord.ShowResult(result);
 
         // enterキー押下で終了
         OutputWord.PushKeyEnter();
     }
 
-    // 役と数字で勝敗を判定する
-    public void CompareHand()
-    {
-        if (player.GetHandRoll() == cpu.GetHandRoll())
-        {
-            if (player.GetHandValue() != cpu.GetHandValue())
-            {
-                if (player.GetHandValue() > cpu.GetHandValue())
-                {
-                    // 数値が相手より大きい場合「勝ち」
-                    OutputWord.ShowReturnWin();
-                }
-                else
-                {
-                    // 数値が相手より小さい場合「負け」
-                    OutputWord.ShowReturnLose();
-                }
-            }
-            else
-            {
-                // 数値が一致する場合「引き分け」
-                OutputWord.ShowReturnDraw();
-            }
-        }
-        else if (player.GetHandRoll() > cpu.GetHandRoll())
-        {
-            // 役が相手より強い場合「勝ち」
-            OutputWord.ShowReturnWin();
-        }
-        else
-        {
-            // 役が相手より弱い場合「負け」
-            OutputWord.ShowReturnLose();
-        }
-    }
-
     // cpuがサイコロを振るまでの処理待ち
-    public void WaitCpu()
+    private void WaitCpu()
     {
         System.Threading.Thread.Sleep(CpuWaitingTime);
     }
