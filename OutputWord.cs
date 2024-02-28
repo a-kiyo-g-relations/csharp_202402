@@ -36,7 +36,7 @@ public class OutputWord
     }
 
     // 役を判断して返す
-    public static void ReturnHandCompare(Player player, bool isPlayer)
+    public static void ShowHand(Player player, bool isPlayer)
     {
         string playerName;
         if (isPlayer)
@@ -61,39 +61,6 @@ public class OutputWord
         {
             // プレイヤー、役なしの場合"役なしです"を返す
             Console.WriteLine($"{playerName}の手は役なしです");
-        }
-    }
-
-    // 役を比較し勝敗を決める    
-    public static Constants.ResultRoll CompareHand(Player player, Player cpu)
-    {
-        if (player.GetHandRoll() == cpu.GetHandRoll())
-        {
-            if (player.GetHandValue() > cpu.GetHandValue())
-            {
-                // 数値が相手より大きい場合「勝ち」
-                return Constants.ResultRoll.Win;
-            }
-            else if (player.GetHandValue() < cpu.GetHandValue())
-            {
-                // 数値が相手より小さい場合「負け」
-                return Constants.ResultRoll.Lose;
-            }
-            else
-            {
-                // 数値が一致する場合「引き分け」
-                return Constants.ResultRoll.Draw;
-            }
-        }
-        else if (player.GetHandRoll() > cpu.GetHandRoll())
-        {
-            // 役が相手より強い場合「勝ち」
-            return Constants.ResultRoll.Win;
-        }
-        else
-        {
-            // 役が相手より弱い場合「負け」
-            return Constants.ResultRoll.Lose;
         }
     }
 

@@ -42,7 +42,7 @@ public class GameFlow
         OutputWord.ShowPipDice(player.DiceValues());
 
         // 役を判断して表示する
-        OutputWord.ReturnHandCompare(player, true);
+        OutputWord.ShowHand(player, true);
 
         // Enterキー押下で次へ
         OutputWord.PushKeyEnter();
@@ -64,20 +64,53 @@ public class GameFlow
         OutputWord.ShowPipDice(cpu.DiceValues());
 
         // 役を判断して表示する
-        OutputWord.ReturnHandCompare(cpu, false);
+        OutputWord.ShowHand(cpu, false);
     }
 
     // ゲームの判定結果
     private void ExecuteResult()
     {
         // 役の強さの判定
-        Constants.ResultRoll result = OutputWord.CompareHand(player, cpu);
+        Constants.ResultRoll result = CompareHand();
 
         // 勝負の結果を表示する
         OutputWord.ShowResult(result);
 
         // enterキー押下で終了
         OutputWord.PushKeyEnter();
+    }
+
+    // 役を比較し勝敗を決める    
+    private Constants.ResultRoll CompareHand()
+    {
+        if (player.GetHandRoll() == cpu.GetHandRoll())
+        {
+            if (player.GetHandValue() > cpu.GetHandValue())
+            {
+                // 数値が相手より大きい場合「勝ち」
+                return Constants.ResultRoll.Win;
+            }
+            else if (player.GetHandValue() < cpu.GetHandValue())
+            {
+                // 数値が相手より小さい場合「負け」
+                return Constants.ResultRoll.Lose;
+            }
+            else
+            {
+                // 数値が一致する場合「引き分け」
+                return Constants.ResultRoll.Draw;
+            }
+        }
+        else if (player.GetHandRoll() > cpu.GetHandRoll())
+        {
+            // 役が相手より強い場合「勝ち」
+            return Constants.ResultRoll.Win;
+        }
+        else
+        {
+            // 役が相手より弱い場合「負け」
+            return Constants.ResultRoll.Lose;
+        }
     }
 
     // cpuがサイコロを振るまでの処理待ち
