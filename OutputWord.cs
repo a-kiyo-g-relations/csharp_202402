@@ -58,6 +58,16 @@ public class OutputWord
         }
     }
 
+    // サイコロの出目の表示する
+    public static void ShowPipDice(int[] numbers)
+    {
+            foreach (int number in numbers)
+            {
+                Console.Write($"[{number}]");
+            }
+        Console.WriteLine();
+    }
+
     // プレイヤーのサイコロの出目の表示する
     public static void ShowPipDicePlayer(int[] numbers)
     {
@@ -73,6 +83,17 @@ public class OutputWord
     public static void ShowPipDiceCpu(int[] numbers)
     {
         Console.Write("相手　 : ");
+        foreach (int number in numbers)
+        {
+            Console.Write($"[{number}] ");
+        }
+        Console.WriteLine();
+    }
+
+    // サイコロの出目を表示する
+    public static void ShowPipDice(string playerName, int[] numbers)
+    {
+        Console.Write($"{playerName} : ");
         foreach (int number in numbers)
         {
             Console.Write($"[{number}] ");

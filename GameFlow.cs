@@ -4,6 +4,8 @@ public class GameFlow
 {
     // cpuの待ち時間の値(ミリ秒)
     private const int CpuWaitingTime = 3000;
+
+    // 指定の回数ループするための値
     private const int RollDiceNumber = 3;
 
     private Player player;
@@ -36,8 +38,14 @@ public class GameFlow
         // プレイヤーの順番であることを表示する
         OutputWord.ShowPlayerTurn(true);
 
-        // プレイヤーの出目が役なしの場合に再度サイコロを振る
+        // サイコロを振り、出目が役なしの場合、再度サイコロを振る
         RollForNoRolePlayer();
+
+        // 出目結果を表示
+        OutputWord.ShowPipDice(player.DiceValues());
+
+        // 役を判断して表示する
+        OutputWord.ShowHand(player, true);
 
         // Enterキー押下で次へ
         OutputWord.ShowNextKeyEnter();
@@ -49,18 +57,24 @@ public class GameFlow
         // cpuの順番であることを表示する
         OutputWord.ShowPlayerTurn(false);
 
-        // cpuの出目が役なしの場合に再度サイコロを振る
+        // サイコロを振り、出目が役なしの場合、再度サイコロを振る
         RollForNoRoleCpu();
+
+        // 出目結果を表示
+        OutputWord.ShowPipDice(cpu.DiceValues());
+
+        // 役を判断して表示する
+        OutputWord.ShowHand(cpu, false);
 
         // Enterキー押下で次へ
         OutputWord.ShowNextKeyEnter();
 
     }
 
-    // プレイヤーの出目が役なしの場合に再度サイコロを振る
+    // サイコロを振り、出目が役なしの場合、再度サイコロを振る
     private void RollForNoRolePlayer()
     {
-        for (int i = 0; RollDiceNumber > i; i++)
+        for (int i = 0; i < RollDiceNumber; i++)
         {
             // Enterキーでサイコロを投げるを表示する
             OutputWord.ShowThrowDicePlayer();
@@ -74,24 +88,19 @@ public class GameFlow
             if (player.GetHandRoll() == Constants.HandRole.YakuNashi)
             {
                 // 出目結果を表示
-                OutputWord.ShowPipDicePlayer(player.DiceValues());
+                OutputWord.ShowPipDice(player.DiceValues());
 
                 // 役を判断して表示する
                 OutputWord.ShowHand(player, true);
             }
             else
             {
-                // 出目結果を表示
-                OutputWord.ShowPipDicePlayer(player.DiceValues());
-
-                // 役を判断して表示する
-                OutputWord.ShowHand(player, true);
                 break;
             }
         }
     }
 
-    // cpuの出目が役なしの場合に再度サイコロを振る
+    // サイコロを振り、出目が役なしの場合、再度サイコロを振る
     private void RollForNoRoleCpu()
     {
         for (int i = 0; RollDiceNumber > i; i++)
@@ -111,18 +120,13 @@ public class GameFlow
             if (cpu.GetHandRoll() == Constants.HandRole.YakuNashi)
             {
                 // 出目結果を表示
-                OutputWord.ShowPipDiceCpu(cpu.DiceValues());
+                OutputWord.ShowPipDice(cpu.DiceValues());
 
                 // 役を判断して表示する
                 OutputWord.ShowHand(cpu, false);
             }
             else
             {
-                // 出目結果を表示
-                OutputWord.ShowPipDiceCpu(cpu.DiceValues());
-
-                // 役を判断して表示する
-                OutputWord.ShowHand(cpu, false);
                 break;
             }
         }
