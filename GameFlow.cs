@@ -41,12 +41,6 @@ public class GameFlow
         // サイコロを振り、出目が役なしの場合、再度サイコロを振る
         RollForNoRolePlayer();
 
-        // 出目結果を表示
-        OutputWord.ShowPipDice(player.DiceValues());
-
-        // 役を判断して表示する
-        OutputWord.ShowHand(player, true);
-
         // Enterキー押下で次へ
         OutputWord.ShowNextKeyEnter();
     }
@@ -59,12 +53,6 @@ public class GameFlow
 
         // サイコロを振り、出目が役なしの場合、再度サイコロを振る
         RollForNoRoleCpu();
-
-        // 出目結果を表示
-        OutputWord.ShowPipDice(cpu.DiceValues());
-
-        // 役を判断して表示する
-        OutputWord.ShowHand(cpu, false);
 
         // Enterキー押下で次へ
         OutputWord.ShowNextKeyEnter();
@@ -85,15 +73,13 @@ public class GameFlow
             // サイコロを振る
             player.RollDices();
 
-            if (player.GetHandRoll() == Constants.HandRole.YakuNashi)
-            {
-                // 出目結果を表示
-                OutputWord.ShowPipDice(player.DiceValues());
+            // 出目結果を表示
+            OutputWord.ShowPipDice(player.DiceValues());
 
-                // 役を判断して表示する
-                OutputWord.ShowHand(player, true);
-            }
-            else
+            // 役を判断して表示する
+            OutputWord.ShowHand(player, true);
+
+            if (player.GetHandRoll() != Constants.HandRole.YakuNashi)
             {
                 break;
             }
@@ -103,7 +89,7 @@ public class GameFlow
     // サイコロを振り、出目が役なしの場合、再度サイコロを振る
     private void RollForNoRoleCpu()
     {
-        for (int i = 0; RollDiceNumber > i; i++)
+        for (int i = 0; i < RollDiceNumber; i++)
         {
             // サイコロを投げますを表示する
             OutputWord.ShowThrowDiceCpu();
@@ -117,15 +103,13 @@ public class GameFlow
             // サイコロを振る
             cpu.RollDices();
 
-            if (cpu.GetHandRoll() == Constants.HandRole.YakuNashi)
-            {
-                // 出目結果を表示
-                OutputWord.ShowPipDice(cpu.DiceValues());
+            // 出目結果を表示
+            OutputWord.ShowPipDice(cpu.DiceValues());
 
-                // 役を判断して表示する
-                OutputWord.ShowHand(cpu, false);
-            }
-            else
+            // 役を判断して表示する
+            OutputWord.ShowHand(cpu, false);
+
+            if (cpu.GetHandRoll() != Constants.HandRole.YakuNashi)
             {
                 break;
             }
