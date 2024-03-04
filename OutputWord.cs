@@ -48,14 +48,13 @@ public class OutputWord
         {
             playerName = "あなた";
             // trueだった場合あなたの順番であることを返す
-            Console.WriteLine($"{playerName}の{number}投目です");
         }
         else
         {
             playerName = "相手";
             // falseだった場合相手の順番であることを返す
-            Console.WriteLine($"{playerName}の{number}投目です");
         }
+        Console.WriteLine($"{playerName}の{number}投目です");
     }
 
     // サイコロの出目の表示する
@@ -82,18 +81,7 @@ public class OutputWord
     // cpuのサイコロの出目の表示する
     public static void ShowPipDiceCpu(int[] numbers)
     {
-        Console.Write("相手　 : ");
-        foreach (int number in numbers)
-        {
-            Console.Write($"[{number}] ");
-        }
-        Console.WriteLine();
-    }
-
-    // サイコロの出目を表示する
-    public static void ShowPipDice(string playerName, int[] numbers)
-    {
-        Console.Write($"{playerName} : ");
+        Console.Write("相手   : ");
         foreach (int number in numbers)
         {
             Console.Write($"[{number}] ");
