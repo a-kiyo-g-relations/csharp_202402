@@ -69,22 +69,14 @@ public class OutputWord
     public static void ShowPipDicePlayer(int[] numbers)
     {
         Console.Write("あなた : ");
-        foreach (int number in numbers)
-        {
-            Console.Write($"[{number}] ");
-        }
-        Console.WriteLine();
+        ShowPipDice(numbers);
     }
 
     // cpuのサイコロの出目の表示する
     public static void ShowPipDiceCpu(int[] numbers)
     {
         Console.Write("相手   : ");
-        foreach (int number in numbers)
-        {
-            Console.Write($"[{number}] ");
-        }
-        Console.WriteLine();
+        ShowPipDice(numbers);
     }
 
     // 役を判断して返す
