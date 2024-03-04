@@ -17,15 +17,13 @@ public class OutputWord
         if (isPlayer)
         {
             playerName = "あなた";
-            Console.WriteLine($"{playerName}の番です");
         }
         else
         {
             playerName = "相手";
-            Console.WriteLine($"{playerName}の番です");
         }
+        Console.WriteLine($"{playerName}の番です");
     }
-
 
     // Enterキーでサイコロを投げるを表示する
     public static void ShowThrowDicePlayer()
@@ -106,7 +104,8 @@ public class OutputWord
             // プレイヤー、ゾロ目の場合"ゾロ目です"を返す
             Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]のゾロ目です");
         }
-        else if (player.GetHandRoll() == Constants.HandRole.YakuAri)
+        
+        if (player.GetHandRoll() == Constants.HandRole.YakuAri)
         {
             // プレイヤー、役ありの場合"役ありです"を返す
             Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]の役ありです");

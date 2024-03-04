@@ -161,7 +161,6 @@ public class GameFlow
             // 数値が相手より小さい場合「負け」
             return Constants.ResultRoll.Lose;
         }
-
         // 勝敗が決まらない場合「引き分け」
         return Constants.ResultRoll.Draw;
     }
