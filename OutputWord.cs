@@ -58,10 +58,10 @@ public class OutputWord
     // サイコロの出目の表示する
     public static void ShowPipDice(int[] numbers)
     {
-            foreach (int number in numbers)
-            {
-                Console.Write($"[{number}]");
-            }
+        foreach (int number in numbers)
+        {
+            Console.Write($"[{number}]");
+        }
         Console.WriteLine();
     }
 
@@ -104,8 +104,7 @@ public class OutputWord
             // プレイヤー、ゾロ目の場合"ゾロ目です"を返す
             Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]のゾロ目です");
         }
-        
-        if (player.GetHandRoll() == Constants.HandRole.YakuAri)
+        else if (player.GetHandRoll() == Constants.HandRole.YakuAri)
         {
             // プレイヤー、役ありの場合"役ありです"を返す
             Console.WriteLine($"{playerName}の手は[{player.GetHandValue()}]の役ありです");
