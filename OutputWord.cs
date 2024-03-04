@@ -10,19 +10,49 @@ public class OutputWord
         Console.ReadKey();
     }
 
-    // プレイヤーの順番であることを表示する
-    public static void ShowPlayerTurn()
+    // プレイヤーか判断して順番を表示する
+    public static void ShowPlayerTurn(bool isPlayer)
     {
-        Console.WriteLine("あなたの番です");
+        string playerName;
+        if (isPlayer)
+        {
+            playerName = "あなた";
+        }
+        else
+        {
+            playerName = "相手";
+        }
+        Console.WriteLine($"{playerName}の番です");
+    }
+
+    // Enterキーでサイコロを投げるを表示する
+    public static void ShowThrowDicePlayer()
+    {
         Console.WriteLine("Enterキーでサイコロを投げる");
         Console.ReadKey();
     }
 
-    // cpuの順番であることを表示する
-    public static void ShowCpuTurn()
+    // サイコロを投げますを表示する
+    public static void ShowThrowDiceCpu()
     {
-        Console.WriteLine("相手の番です");
         Console.WriteLine("サイコロを投げます");
+    }
+
+    // 何回目のサイコロを投げるかを表示する
+    public static void ShowHowManyThrow(bool isPlayer, int number)
+    {
+        string playerName;
+        if (isPlayer)
+        {
+            playerName = "あなた";
+            // trueだった場合あなたの順番であることを返す
+        }
+        else
+        {
+            playerName = "相手";
+            // falseだった場合相手の順番であることを返す
+        }
+        Console.WriteLine($"{playerName}の{number}投目です");
     }
 
     // サイコロの出目の表示する
@@ -33,6 +63,20 @@ public class OutputWord
             Console.Write($"[{number}]");
         }
         Console.WriteLine();
+    }
+
+    // プレイヤーのサイコロの出目の表示する
+    public static void ShowPipDicePlayer(int[] numbers)
+    {
+        Console.Write("あなた : ");
+        ShowPipDice(numbers);
+    }
+
+    // cpuのサイコロの出目の表示する
+    public static void ShowPipDiceCpu(int[] numbers)
+    {
+        Console.Write("相手   : ");
+        ShowPipDice(numbers);
     }
 
     // 役を判断して返す
@@ -67,11 +111,11 @@ public class OutputWord
     // 勝敗結果を表示する
     public static void ShowResult(Constants.ResultRoll result)
     {
-        if(result == Constants.ResultRoll.Win)
+        if (result == Constants.ResultRoll.Win)
         {
             Console.WriteLine("あなたの勝ちです");
         }
-        else if(result == Constants.ResultRoll.Lose)
+        else if (result == Constants.ResultRoll.Lose)
         {
             Console.WriteLine("あなたの負けです");
         }
